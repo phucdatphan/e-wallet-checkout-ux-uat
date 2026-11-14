@@ -17,7 +17,7 @@
 
 ---
 
-## 🔗 Chuỗi 3 Dự Án Liên Hoàn (E-Wallet Payment System)
+## 🔗 Chuỗi 3 Dự Án (E-Wallet Payment System)
 
 | Giai đoạn | Tên Repo | Vai trò & Trọng tâm | Liên kết |
 | :--- | :--- | :--- | :--- |
