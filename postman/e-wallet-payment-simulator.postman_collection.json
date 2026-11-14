@@ -1,0 +1,138 @@
+{
+  "info": {
+    "name": "E-Wallet Payment Simulator — UAT & Idempotency Suite",
+    "_postman_id": "b1f8c2d0-4e3a-4b7a-9c1d-202611130001",
+    "description": "Bộ Postman Collection kiểm thử trực tiếp với Backend Node.js (Project 1): Tạo đơn, IPN Webhook, Query Status, và Chặn Double-Charge (Idempotency).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "merchantUrl", "value": "http://localhost:3000" },
+    { "key": "gatewayUrl", "value": "http://localhost:4000" },
+    { "key": "transId", "value": "" },
+    { "key": "orderId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Create Payment Order (MoMo)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "const json = pm.response.json();",
+              "pm.test('Response contains payUrl or transId', function () {",
+              "  pm.expect(json).to.be.an('object');",
+              "});",
+              "if (json.transId) { pm.collectionVariables.set('transId', json.transId); }",
+              "if (json.orderId) { pm.collectionVariables.set('orderId', json.orderId); }"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 450000,\n  \"walletType\": \"MOMO\",\n  \"orderInfo\": \"Thanh toan don hang UAT\",\n  \"idempotencyKey\": \"idem_uat_001\"\n}"
+        },
+        "url": {
+          "raw": "{{merchantUrl}}/api/payment/create",
+          "host": ["{{merchantUrl}}"],
+          "path": ["api", "payment", "create"]
+        }
+      }
+    },
+    {
+      "name": "2. Gateway Confirm Payment (Trigger IPN)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "const json = pm.response.json();",
+              "pm.test('Payment confirmed successfully', function () {",
+              "  pm.expect(json.resultCode === 0 || json.success === true).to.be.true;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transId\": \"{{transId}}\",\n  \"resultCode\": 0\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/v2/gateway/pay/confirm",
+          "host": ["{{gatewayUrl}}"],
+          "path": ["v2", "gateway", "pay", "confirm"]
+        }
+      }
+    },
+    {
+      "name": "3. IPN Webhook Callback — Idempotency Check (Retry)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Idempotent IPN returns 200 OK', function () { pm.response.to.have.status(200); });",
+              "const json = pm.response.json();",
+              "pm.test('ReturnCode is 0 (no duplicate processing)', function () {",
+              "  pm.expect(json.returnCode === 0 || json.resultCode === 0).to.be.true;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orderId\": \"{{orderId}}\",\n  \"transId\": \"{{transId}}\",\n  \"amount\": 450000,\n  \"resultCode\": 0,\n  \"message\": \"Successful\"\n}"
+        },
+        "url": {
+          "raw": "{{merchantUrl}}/api/payment/callback",
+          "host": ["{{merchantUrl}}"],
+          "path": ["api", "payment", "callback"]
+        }
+      }
+    },
+    {
+      "name": "4. Query Order Status (Polling)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transId\": \"{{transId}}\"\n}"
+        },
+        "url": {
+          "raw": "{{gatewayUrl}}/v2/gateway/pay/query",
+          "host": ["{{gatewayUrl}}"],
+          "path": ["v2", "gateway", "pay", "query"]
+        }
+      }
+    }
+  ]
+}

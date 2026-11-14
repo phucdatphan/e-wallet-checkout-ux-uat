@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Wallet Checkout Wireframes (5 Core Screens)</title>
+  <style>
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { margin: 0; padding: 24px; background: #f4f6f8; color: #1f2937; }
+    h1 { text-align: center; margin-bottom: 8px; }
+    .subtitle { text-align: center; color: #6b7280; margin-bottom: 32px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1400px; margin: 0 auto; }
+    .phone { background: #fff; border: 2px solid #d1d5db; border-radius: 24px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; min-height: 540px; }
+    .screen-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #4f46e5; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .header { font-size: 18px; font-weight: 700; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 16px; }
+    .box { border: 1.5px dashed #9ca3af; border-radius: 10px; padding: 12px; margin-bottom: 12px; background: #f9fafb; }
+    .radio-item { display: flex; align-items: center; justify-content: space-between; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+    .radio-item.active { border-color: #4f46e5; background: #eef2ff; }
+    .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: 700; font-size: 14px; cursor: pointer; text-align: center; }
+    .btn-primary { background: #4f46e5; color: #fff; }
+    .btn-secondary { background: #e5e7eb; color: #374151; margin-top: 8px; }
+    .qr-box { width: 160px; height: 160px; margin: 16px auto; border: 2px solid #111827; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #6b7280; background: repeating-linear-gradient(45deg, #f3f4f6, #f3f4f6 10px, #e5e7eb 10px, #e5e7eb 20px); }
+    .timer { text-align: center; font-size: 24px; font-weight: 800; color: #dc2626; margin: 8px 0; }
+    .status-icon { width: 64px; height: 64px; border-radius: 50%; margin: 24px auto 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; }
+    .success { background: #d1fae5; color: #059669; }
+    .expired { background: #fef3c7; color: #d97706; }
+    .failed { background: #fee2e2; color: #dc2626; }
+    .center { text-align: center; }
+    .muted { color: #6b7280; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>E-Wallet Checkout — Core Wireframes</h1>
+  <p class="subtitle">Luồng thanh toán: Chọn ví → QR + Đếm ngược 15 phút → Trạng thái (Thành công / Timeout / Hủy đơn)</p>
+
+  <div class="grid">
+    <!-- Screen 1 -->
+    <div class="phone">
+      <div>
+        <div class="screen-tag">Screen 01 • Chọn phương thức</div>
+        <div class="header">Thanh toán đơn hàng</div>
+        <div class="box">
+          <div><strong>Đơn hàng #ORD-202611</strong></div>
+          <div class="muted">2 sản phẩm • Tổng: <strong>450.000đ</strong></div>
+        </div>
+        <div class="muted" style="margin-bottom:8px;">Chọn ví điện tử:</div>
+        <div class="radio-item active">
+          <span><strong>Ví MoMo</strong> (Quét QR / App)</span>
+          <span>●</span>
+        </div>
+        <div class="radio-item">
+          <span><strong>Ví ZaloPay</strong> (Quét QR / App)</span>
+          <span>○</span>
+        </div>
+      </div>
+      <div>
+        <div class="muted center" style="margin-bottom:8px;">Tồn kho sẽ được giữ trong 15 phút</div>
+        <div class="btn btn-primary">Thanh toán ngay (450.000đ)</div>
+      </div>
+    </div>
+
+    <!-- Screen 2 -->
+    <div class="phone">
+      <div>
+        <div class="screen-tag">Screen 02 • Quét QR & Đếm ngược</div>
+        <div class="header">Thanh toán qua Ví MoMo</div>
+        <div class="center muted">Thời gian còn lại</div>
+        <div class="timer">14:58</div>
+        <div class="qr-box">[ MÃ QR ĐỘNG SVG ]</div>
+        <div class="box center muted">
+          Mở ứng dụng <strong>MoMo</strong> và quét mã QR để hoàn tất thanh toán.<br/>
+          Số tiền: <strong>450.000đ</strong>
+        </div>
+      </div>
+      <div>
+        <div class="btn btn-primary">Mở App MoMo (Deep-link)</div>
+        <div class="btn btn-secondary">Hủy giao dịch</div>
+      </div>
+    </div>
+
+    <!-- Screen 3 -->
+    <div class="phone">
+      <div>
+        <div class="screen-tag">Screen 03 • Thành công (PAID)</div>
+        <div class="header">Kết quả thanh toán</div>
+        <div class="status-icon success">✓</div>
+        <h3 class="center" style="margin:8px 0;">Thanh toán thành công!</h3>
+        <p class="center muted">Đơn hàng #ORD-202611 đã được xác nhận qua IPN.</p>
+        <div class="box">
+          <div class="muted">Mã giao dịch: <strong>MOMO_982341</strong></div>
+          <div class="muted">Số tiền: <strong>450.000đ</strong></div>
+          <div class="muted">Trạng thái: <strong>PAID</strong></div>
+        </div>
+      </div>
+      <div>
+        <div class="btn btn-primary">Xem chi tiết đơn hàng</div>
+        <div class="btn btn-secondary">Tiếp tục mua sắm</div>
+      </div>
+    </div>
+
+    <!-- Screen 4 -->
+    <div class="phone">
+      <div>
+        <div class="screen-tag">Screen 04 • Hết hạn (EXPIRED)</div>
+        <div class="header">Kết quả thanh toán</div>
+        <div class="status-icon expired">!</div>
+        <h3 class="center" style="margin:8px 0;">Giao dịch đã hết hạn</h3>
+        <p class="center muted">Quá thời gian 15 phút thanh toán. Tồn kho đã được tự động mở khóa.</p>
+        <div class="box">
+          <div class="muted">Mã đơn: <strong>#ORD-202611</strong></div>
+          <div class="muted">Trạng thái: <strong>EXPIRED</strong></div>
+        </div>
+      </div>
+      <div>
+        <div class="btn btn-primary">Đặt lại đơn hàng</div>
+        <div class="btn btn-secondary">Về trang chủ</div>
+      </div>
+    </div>
+
+    <!-- Screen 5 -->
+    <div class="phone">
+      <div>
+        <div class="screen-tag">Screen 05 • Hủy / Thất bại (FAILED)</div>
+        <div class="header">Kết quả thanh toán</div>
+        <div class="status-icon failed">✕</div>
+        <h3 class="center" style="margin:8px 0;">Thanh toán thất bại</h3>
+        <p class="center muted">Bạn đã hủy giao dịch hoặc số dư ví không đủ.</p>
+        <div class="box">
+          <div class="muted">Mã lỗi: <strong>USER_CANCELLED</strong></div>
+          <div class="muted">Trạng thái: <strong>FAILED</strong></div>
+        </div>
+      </div>
+      <div>
+        <div class="btn btn-primary">Thử lại với ví khác</div>
+        <div class="btn btn-secondary">Về giỏ hàng</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
