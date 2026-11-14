@@ -1,6 +1,6 @@
 # Project 2 (Stage 2): E-Wallet Checkout UX, AI-Assisted Spec & UAT Suite
 
-> **Chuỗi 3 Dự án Liên hoàn (E-Wallet Payment System)**:
+> **Chuỗi 3 Dự án (E-Wallet Payment System)**:
 > - **Stage 1 (Core Backend & BRD)**: [e-wallet-payment-simulator](https://github.com/phucdatphan/e-wallet-payment-simulator)
 > - **Stage 2 (UX, Agile Spec & UAT)** *(Repo hiện tại)*: [e-wallet-checkout-ux-uat](https://github.com/phucdatphan/e-wallet-checkout-ux-uat)
 > - **Stage 3 (Post-Launch Analytics & Reconciliation)**: [e-wallet-post-launch-analytics](https://github.com/phucdatphan/e-wallet-post-launch-analytics)
