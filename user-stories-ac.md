@@ -88,6 +88,10 @@
     - **Given** đơn hàng `#ORD-001` đã được xử lý thành công ở lần nhận IPN đầu tiên.
     - **When** Gateway gửi lại cùng một payload IPN lần thứ 2 và thứ 3 (do timeout mạng trước đó).
     - **Then** hệ thống nhận diện `idempotencyKey` đã tồn tại, KHÔNG chạy lại logic trừ kho/gửi email, và trả về ngay `HTTP 200 { returnCode: 0, message: "Idempotent OK" }`.
+  - **AC2 (Chính sách Retry Exponential Backoff & Dead Letter Queue - DLQ)**:
+    - **Given** Merchant Server tạm thời quá tải hoặc phản hồi `HTTP 5xx` / timeout `> 5s`.
+    - **When** Gateway kích hoạt cơ chế gửi lại IPN tự động.
+    - **Then** Gateway thực hiện tối đa **5 lần retry** theo chu kỳ giãn cách lũy thừa (**Exponential Backoff**: `15s → 1m → 5m → 15m → 60m`); nếu sau 5 lần vẫn thất bại, bản tin được đẩy vào **Dead Letter Queue (DLQ)** và bắn cảnh báo tự động cho đội Vận hành (Ops/CSKH) đối soát.
 
 ---
 

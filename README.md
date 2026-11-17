@@ -56,8 +56,8 @@ Sau khi hoàn thiện kiến trúc lõi ở **Stage 1**, đội ngũ sản phẩ
  [03. Thành công (PAID)]                         [04. Hết hạn (EXPIRED)]                         [05. Thất bại (FAILED)]
 ```
 
+- **Interactive UX Studio v2.0 (HTML Offline)**: [wireframes/user-journey-wireframes.html](wireframes/user-journey-wireframes.html) *(Hỗ trợ chuyển đổi chế độ Xem toàn bộ 6 màn hình / Chạy thử Prototype từng bước, đổi giao diện MoMo ↔ ZaloPay, và bật/tắt lớp chú thích BA Rules trực tiếp trên màn hình).*
 - **Figma Design (Interactive)**: 👉 [Mở Wireframes trên Figma](https://www.figma.com/design/eedWAY1oMYerrjZztJNXIc?node-id=4-3&autoplay-code-preview=4-3)
-- **Bản HTML Offline**: [wireframes/user-journey-wireframes.html](wireframes/user-journey-wireframes.html)
 
 ---
 

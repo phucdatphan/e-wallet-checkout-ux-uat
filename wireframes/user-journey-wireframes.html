@@ -3,138 +3,377 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Wallet Checkout Wireframes (5 Core Screens)</title>
+  <title>Stage 2 — E-Wallet Interactive UX Studio & BA Annotated Wireframes v2.0</title>
   <style>
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { margin: 0; padding: 24px; background: #f4f6f8; color: #1f2937; }
-    h1 { text-align: center; margin-bottom: 8px; }
-    .subtitle { text-align: center; color: #6b7280; margin-bottom: 32px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1400px; margin: 0 auto; }
-    .phone { background: #fff; border: 2px solid #d1d5db; border-radius: 24px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; min-height: 540px; }
-    .screen-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #4f46e5; letter-spacing: 0.05em; margin-bottom: 12px; }
-    .header { font-size: 18px; font-weight: 700; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 16px; }
-    .box { border: 1.5px dashed #9ca3af; border-radius: 10px; padding: 12px; margin-bottom: 12px; background: #f9fafb; }
-    .radio-item { display: flex; align-items: center; justify-content: space-between; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
-    .radio-item.active { border-color: #4f46e5; background: #eef2ff; }
-    .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: 700; font-size: 14px; cursor: pointer; text-align: center; }
-    .btn-primary { background: #4f46e5; color: #fff; }
-    .btn-secondary { background: #e5e7eb; color: #374151; margin-top: 8px; }
-    .qr-box { width: 160px; height: 160px; margin: 16px auto; border: 2px solid #111827; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #6b7280; background: repeating-linear-gradient(45deg, #f3f4f6, #f3f4f6 10px, #e5e7eb 10px, #e5e7eb 20px); }
-    .timer { text-align: center; font-size: 24px; font-weight: 800; color: #dc2626; margin: 8px 0; }
-    .status-icon { width: 64px; height: 64px; border-radius: 50%; margin: 24px auto 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; }
-    .success { background: #d1fae5; color: #059669; }
-    .expired { background: #fef3c7; color: #d97706; }
-    .failed { background: #fee2e2; color: #dc2626; }
+    :root {
+      --brand: #a50064;
+      --brand-soft: #fdf2f8;
+      --brand-border: #f472b6;
+      --primary: #4f46e5;
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+    }
+    body.zalo {
+      --brand: #0068ff;
+      --brand-soft: #eff6ff;
+      --brand-border: #60a5fa;
+    }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; }
+    body { margin: 0; padding: 24px 16px 56px; background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 55%); color: #f8fafc; min-height: 100vh; }
+    .container { max-width: 1380px; margin: 0 auto; }
+
+    .studio-header {
+      background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 20px; padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+      margin-bottom: 28px; box-shadow: 0 16px 40px rgba(0,0,0,0.28);
+    }
+    .title-block h1 { margin: 0; font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
+    .title-block p { margin: 4px 0 0; font-size: 13px; color: #94a3b8; }
+
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .seg-group { background: #0f172a; padding: 4px; border-radius: 12px; border: 1px solid #334155; display: inline-flex; gap: 4px; }
+    .seg-btn {
+      border: none; background: transparent; color: #cbd5e1; padding: 7px 13px; border-radius: 8px;
+      font-size: 12.5px; font-weight: 700; cursor: pointer; transition: 0.15s;
+    }
+    .seg-btn.active { background: #4f46e5; color: #fff; }
+    .seg-btn.momo-active { background: #a50064; color: #fff; }
+    .seg-btn.zalo-active { background: #0068ff; color: #fff; }
+    .ba-toggle {
+      border: 1px solid #f59e0b; background: rgba(245, 158, 11, 0.15); color: #fcd34d;
+      padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; cursor: pointer;
+    }
+    .ba-toggle.off { border-color: #475569; background: transparent; color: #94a3b8; }
+
+    /* Grid vs Interactive Single Phone Mode */
+    .screens-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; align-items: stretch;
+    }
+    .screens-grid.single-mode {
+      display: flex; justify-content: center;
+    }
+    .screens-grid.single-mode .phone-wrap { display: none; width: 375px; }
+    .screens-grid.single-mode .phone-wrap.active-step { display: block; }
+
+    .sim-nav {
+      display: none; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .sim-nav.visible { display: flex; }
+    .step-chip {
+      background: #1e293b; border: 1px solid #334155; color: #cbd5e1; padding: 7px 14px;
+      border-radius: 999px; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .step-chip.current { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+    /* iPhone Mockup Shell */
+    .phone {
+      background: var(--card); color: var(--text); border-radius: 32px; padding: 18px 18px 22px;
+      border: 6px solid #334155; box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+      display: flex; flex-direction: column; justify-content: space-between; min-height: 590px; position: relative;
+    }
+    .notch { width: 100px; height: 18px; background: #1e293b; border-radius: 99px; margin: 0 auto 14px; }
+    .screen-tag { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--brand); letter-spacing: 0.05em; margin-bottom: 8px; }
+    .us-pill { background: #eef2ff; color: #4338ca; padding: 2px 8px; border-radius: 99px; font-size: 10.5px; }
+    .app-header { font-size: 17px; font-weight: 800; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px; }
+
+    .order-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 12px; margin-bottom: 12px; font-size: 13px; }
+    .radio-card {
+      display: flex; align-items: center; justify-content: space-between;
+      border: 2px solid #e2e8f0; border-radius: 12px; padding: 11px 12px; margin-bottom: 9px; cursor: pointer;
+    }
+    .radio-card.selected { border-color: var(--brand); background: var(--brand-soft); }
+    .w-badge {
+      width: 34px; height: 34px; border-radius: 9px; color: #fff; font-weight: 800; font-size: 11px;
+      display: inline-flex; align-items: center; justify-content: center; margin-right: 10px;
+    }
+
+    .qr-box {
+      width: 156px; height: 156px; margin: 10px auto; border: 2.5px solid var(--brand); border-radius: 16px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: repeating-linear-gradient(45deg, #f8fafc, #f8fafc 8px, #f1f5f9 8px, #f1f5f9 16px);
+      position: relative; overflow: hidden;
+    }
+    .qr-inner { width: 112px; height: 112px; border: 4px solid #0f172a; border-radius: 8px; display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; padding: 8px; background: #fff; }
+    .qr-dot { background: #0f172a; border-radius: 2px; }
+    .timer-display { text-align: center; font-size: 26px; font-weight: 800; color: #dc2626; font-variant-numeric: tabular-nums; margin: 4px 0; }
+
+    .status-circle {
+      width: 68px; height: 68px; border-radius: 50%; margin: 16px auto 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800;
+    }
+    .st-ok { background: #dcfce7; color: #15803d; box-shadow: 0 0 0 8px #f0fdf4; }
+    .st-warn { background: #fef3c7; color: #b45309; box-shadow: 0 0 0 8px #fffbeb; }
+    .st-err { background: #fee2e2; color: #b91c1c; box-shadow: 0 0 0 8px #fef2f2; }
+    .st-poll { background: #dbeafe; color: #1d4ed8; box-shadow: 0 0 0 8px #eff6ff; animation: pulse 1.6s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+
+    .btn {
+      width: 100%; padding: 12px; border-radius: 12px; border: none; font-weight: 700; font-size: 13.5px;
+      cursor: pointer; text-align: center; transition: 0.15s;
+    }
+    .btn-brand { background: var(--brand); color: #fff; box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+    .btn-ghost { background: #f1f5f9; color: #334155; margin-top: 8px; }
+
+    /* BA Annotation Callout */
+    .ba-note {
+      margin-top: 10px; background: #fffbeb; border: 1px solid #fcd34d; border-left: 4px solid #f59e0b;
+      color: #78350f; border-radius: 8px; padding: 8px 10px; font-size: 11.5px; line-height: 1.45;
+    }
+    body.hide-ba .ba-note { display: none; }
+    .muted { color: var(--muted); font-size: 12.5px; }
     .center { text-align: center; }
-    .muted { color: #6b7280; font-size: 13px; }
   </style>
 </head>
 <body>
-  <h1>E-Wallet Checkout — Core Wireframes</h1>
-  <p class="subtitle">Luồng thanh toán: Chọn ví → QR + Đếm ngược 15 phút → Trạng thái (Thành công / Timeout / Hủy đơn)</p>
-
-  <div class="grid">
-    <!-- Screen 1 -->
-    <div class="phone">
-      <div>
-        <div class="screen-tag">Screen 01 • Chọn phương thức</div>
-        <div class="header">Thanh toán đơn hàng</div>
-        <div class="box">
-          <div><strong>Đơn hàng #ORD-202611</strong></div>
-          <div class="muted">2 sản phẩm • Tổng: <strong>450.000đ</strong></div>
-        </div>
-        <div class="muted" style="margin-bottom:8px;">Chọn ví điện tử:</div>
-        <div class="radio-item active">
-          <span><strong>Ví MoMo</strong> (Quét QR / App)</span>
-          <span>●</span>
-        </div>
-        <div class="radio-item">
-          <span><strong>Ví ZaloPay</strong> (Quét QR / App)</span>
-          <span>○</span>
-        </div>
+  <div class="container">
+    <div class="studio-header">
+      <div class="title-block">
+        <h1>🎨 Stage 2 — E-Wallet Checkout UX Studio & BA Spec v2.0</h1>
+        <p>6 màn hình cốt lõi & ngoại lệ • Tích hợp trực tiếp User Stories (Gherkin) & Quy tắc Nghiệp vụ Fintech</p>
       </div>
-      <div>
-        <div class="muted center" style="margin-bottom:8px;">Tồn kho sẽ được giữ trong 15 phút</div>
-        <div class="btn btn-primary">Thanh toán ngay (450.000đ)</div>
+      <div class="controls">
+        <div class="seg-group">
+          <button class="seg-btn active" id="modeGridBtn" onclick="setMode('grid')">🗺️ Xem toàn bộ (6 Màn hình)</button>
+          <button class="seg-btn" id="modeSimBtn" onclick="setMode('sim')">📱 Chạy thử Prototype</button>
+        </div>
+        <div class="seg-group">
+          <button class="seg-btn momo-active" id="walletMomoBtn" onclick="setWallet('momo')">MoMo</button>
+          <button class="seg-btn" id="walletZaloBtn" onclick="setWallet('zalo')">ZaloPay</button>
+        </div>
+        <button class="ba-toggle" id="baToggleBtn" onclick="toggleBA()">🔍 Ghi chú BA: BẬT</button>
       </div>
     </div>
 
-    <!-- Screen 2 -->
-    <div class="phone">
-      <div>
-        <div class="screen-tag">Screen 02 • Quét QR & Đếm ngược</div>
-        <div class="header">Thanh toán qua Ví MoMo</div>
-        <div class="center muted">Thời gian còn lại</div>
-        <div class="timer">14:58</div>
-        <div class="qr-box">[ MÃ QR ĐỘNG SVG ]</div>
-        <div class="box center muted">
-          Mở ứng dụng <strong>MoMo</strong> và quét mã QR để hoàn tất thanh toán.<br/>
-          Số tiền: <strong>450.000đ</strong>
-        </div>
-      </div>
-      <div>
-        <div class="btn btn-primary">Mở App MoMo (Deep-link)</div>
-        <div class="btn btn-secondary">Hủy giao dịch</div>
-      </div>
+    <div class="sim-nav" id="simNav">
+      <button class="step-chip current" onclick="goStep(0)">01. Checkout</button>
+      <button class="step-chip" onclick="goStep(1)">02. Quét QR (15:00)</button>
+      <button class="step-chip" onclick="goStep(2)">03. Mạng chậm / Polling</button>
+      <button class="step-chip" onclick="goStep(3)">04. Thành công (PAID)</button>
+      <button class="step-chip" onclick="goStep(4)">05. Hết hạn (EXPIRED)</button>
+      <button class="step-chip" onclick="goStep(5)">06. Hủy / Thất bại</button>
     </div>
 
-    <!-- Screen 3 -->
-    <div class="phone">
-      <div>
-        <div class="screen-tag">Screen 03 • Thành công (PAID)</div>
-        <div class="header">Kết quả thanh toán</div>
-        <div class="status-icon success">✓</div>
-        <h3 class="center" style="margin:8px 0;">Thanh toán thành công!</h3>
-        <p class="center muted">Đơn hàng #ORD-202611 đã được xác nhận qua IPN.</p>
-        <div class="box">
-          <div class="muted">Mã giao dịch: <strong>MOMO_982341</strong></div>
-          <div class="muted">Số tiền: <strong>450.000đ</strong></div>
-          <div class="muted">Trạng thái: <strong>PAID</strong></div>
+    <div class="screens-grid" id="screensContainer">
+      <!-- Screen 01 -->
+      <div class="phone-wrap active-step">
+        <div class="phone">
+          <div>
+            <div class="notch"></div>
+            <div class="screen-tag"><span>Screen 01 • Checkout</span><span class="us-pill">US-01 / US-02</span></div>
+            <div class="app-header">Thanh toán đơn hàng</div>
+            <div class="order-card">
+              <div style="display:flex; justify-content:space-between;"><strong>#ORD-202611</strong><span style="color:#b45309; font-weight:700; font-size:11px;">Giữ kho 15p</span></div>
+              <div class="muted" style="margin-top:4px;">2 sản phẩm • Tổng cộng: <strong style="color:#0f172a;">450.000 đ</strong></div>
+            </div>
+            <div class="muted" style="font-weight:700; margin-bottom:8px;">Chọn ví thanh toán:</div>
+            <div class="radio-card selected" id="r-momo" onclick="setWallet('momo')">
+              <div style="display:flex; align-items:center;">
+                <span class="w-badge" style="background:#a50064;">MoMo</span>
+                <div><strong style="font-size:13.5px;">Ví MoMo</strong><div class="muted" style="font-size:11px;">QR Vector / Mở App</div></div>
+              </div>
+              <span>●</span>
+            </div>
+            <div class="radio-card" id="r-zalo" onclick="setWallet('zalo')">
+              <div style="display:flex; align-items:center;">
+                <span class="w-badge" style="background:#0068ff;">Zalo</span>
+                <div><strong style="font-size:13.5px;">Ví ZaloPay</strong><div class="muted" style="font-size:11px;">Deep-link / Ưu đãi MDR</div></div>
+              </div>
+              <span>○</span>
+            </div>
+            <div class="ba-note">
+              <strong>BA Rule (US-02):</strong> Bấm nút tạo đơn sẽ khóa nút ngay lập tức (chống Double Submit) + gửi kèm <code>idempotencyKey</code> và chữ ký <code>HMAC-SHA256</code>.
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-brand" onclick="goStep(1)">Thanh toán ngay • 450.000 đ →</button>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="btn btn-primary">Xem chi tiết đơn hàng</div>
-        <div class="btn btn-secondary">Tiếp tục mua sắm</div>
-      </div>
-    </div>
 
-    <!-- Screen 4 -->
-    <div class="phone">
-      <div>
-        <div class="screen-tag">Screen 04 • Hết hạn (EXPIRED)</div>
-        <div class="header">Kết quả thanh toán</div>
-        <div class="status-icon expired">!</div>
-        <h3 class="center" style="margin:8px 0;">Giao dịch đã hết hạn</h3>
-        <p class="center muted">Quá thời gian 15 phút thanh toán. Tồn kho đã được tự động mở khóa.</p>
-        <div class="box">
-          <div class="muted">Mã đơn: <strong>#ORD-202611</strong></div>
-          <div class="muted">Trạng thái: <strong>EXPIRED</strong></div>
+      <!-- Screen 02 -->
+      <div class="phone-wrap">
+        <div class="phone">
+          <div>
+            <div class="notch"></div>
+            <div class="screen-tag"><span>Screen 02 • QR & Timer</span><span class="us-pill">US-03</span></div>
+            <div class="app-header">Quét mã <span class="w-name">MoMo</span></div>
+            <div class="center muted">Thời gian giữ đơn còn lại</div>
+            <div class="timer-display" id="liveTimer">14:58</div>
+            <div class="qr-box">
+              <div class="qr-inner">
+                <div class="qr-dot"></div><div class="qr-dot" style="background:transparent"></div><div class="qr-dot"></div>
+                <div class="qr-dot" style="background:transparent"></div><div class="qr-dot"></div><div class="qr-dot" style="background:transparent"></div>
+                <div class="qr-dot"></div><div class="qr-dot" style="background:transparent"></div><div class="qr-dot"></div>
+              </div>
+            </div>
+            <div class="order-card center">
+              Số tiền: <strong>450.000 đ</strong><br/>
+              <span class="muted">Mở ứng dụng <span class="w-name">MoMo</span> quét mã để hoàn tất</span>
+            </div>
+            <div class="ba-note">
+              <strong>UX Insight (Stage 3):</strong> Nút <em>Mở App (One-Tap Deep-link)</em> đặt nổi bật giúp giảm tỷ lệ rớt đơn 24.07% trên thiết bị di động.
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-brand" onclick="goStep(3)">📲 Mở App <span class="w-name">MoMo</span> (Giả lập Paid)</button>
+            <button class="btn btn-ghost" onclick="goStep(2)">Giả lập Mạng rớt / Hủy</button>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="btn btn-primary">Đặt lại đơn hàng</div>
-        <div class="btn btn-secondary">Về trang chủ</div>
-      </div>
-    </div>
 
-    <!-- Screen 5 -->
-    <div class="phone">
-      <div>
-        <div class="screen-tag">Screen 05 • Hủy / Thất bại (FAILED)</div>
-        <div class="header">Kết quả thanh toán</div>
-        <div class="status-icon failed">✕</div>
-        <h3 class="center" style="margin:8px 0;">Thanh toán thất bại</h3>
-        <p class="center muted">Bạn đã hủy giao dịch hoặc số dư ví không đủ.</p>
-        <div class="box">
-          <div class="muted">Mã lỗi: <strong>USER_CANCELLED</strong></div>
-          <div class="muted">Trạng thái: <strong>FAILED</strong></div>
+      <!-- Screen 03 (Edge Case: Active Polling) -->
+      <div class="phone-wrap">
+        <div class="phone">
+          <div>
+            <div class="notch"></div>
+            <div class="screen-tag"><span>Screen 03 • Polling</span><span class="us-pill">US-10 Edge Case</span></div>
+            <div class="app-header">Đang xác nhận giao dịch</div>
+            <div class="status-circle st-poll">⟳</div>
+            <h3 class="center" style="margin:8px 0 4px;">Đang đồng bộ kết quả...</h3>
+            <p class="center muted">Ví đã trừ tiền nhưng IPN Webhook về chậm do nghẽn mạng giờ cao điểm.</p>
+            <div class="order-card">
+              <div>Trạng thái: <strong style="color:#1d4ed8;">VERIFYING (Lần 2/6)</strong></div>
+              <div class="muted" style="margin-top:4px;">Tự động gọi <code>/v2/gateway/pay/query</code> mỗi 5 giây</div>
+            </div>
+            <div class="ba-note">
+              <strong>BA Rule (US-10):</strong> Tuyệt đối KHÔNG báo "Thất bại" khi chưa hết chu kỳ Polling để tránh khách hàng hoang mang thanh toán lại lần 2!
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-brand" onclick="goStep(3)">Đồng bộ thành công → PAID</button>
+            <button class="btn btn-ghost" onclick="goStep(4)">Quá hạn 15 phút → EXPIRED</button>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="btn btn-primary">Thử lại với ví khác</div>
-        <div class="btn btn-secondary">Về giỏ hàng</div>
+
+      <!-- Screen 04 (PAID) -->
+      <div class="phone-wrap">
+        <div class="phone">
+          <div>
+            <div class="notch"></div>
+            <div class="screen-tag"><span>Screen 04 • Thành công</span><span class="us-pill">US-04 / US-06</span></div>
+            <div class="app-header">Biên lai thanh toán</div>
+            <div class="status-circle st-ok">✓</div>
+            <h3 class="center" style="margin:8px 0 4px; color:#15803d;">Thanh toán thành công!</h3>
+            <p class="center muted">Đã xác thực 3 lớp qua IPN Server-to-Server.</p>
+            <div class="order-card">
+              <div style="display:flex; justify-content:space-between; padding:3px 0;"><span class="muted">Mã đơn:</span><strong>#ORD-202611</strong></div>
+              <div style="display:flex; justify-content:space-between; padding:3px 0;"><span class="muted">Mã ví:</span><strong>TXN_982341</strong></div>
+              <div style="display:flex; justify-content:space-between; padding:3px 0;"><span class="muted">Số tiền:</span><strong style="color:#15803d;">450.000 đ</strong></div>
+              <div style="display:flex; justify-content:space-between; padding:3px 0;"><span class="muted">Trạng thái:</span><strong>PAID</strong></div>
+            </div>
+            <div class="ba-note">
+              <strong>BA Rule (US-05):</strong> Khóa <code>ipn_TXN_982341_0</code> đã được lưu. Nếu Gateway retry IPN thêm 3 lần, hệ thống trả ngay <code>200 OK</code> mà không trừ kho lần 2.
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-brand" onclick="goStep(0)">Xem chi tiết đơn hàng</button>
+            <button class="btn btn-ghost" onclick="goStep(0)">Tiếp tục mua sắm</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 05 (EXPIRED) -->
+      <div class="phone-wrap">
+        <div class="phone">
+          <div>
+            <div class="notch"></div>
+            <div class="screen-tag"><span>Screen 05 • Hết hạn</span><span class="us-pill">US-07 / US-08</span></div>
+            <div class="app-header">Kết quả thanh toán</div>
+            <div class="status-circle st-warn">!</div>
+            <h3 class="center" style="margin:8px 0 4px; color:#b45309;">Phiên QR đã hết hạn</h3>
+            <p class="center muted">Quá 15 phút chưa ghi nhận thanh toán. Tồn kho tạm giữ đã được mở khóa tự động.</p>
+            <div class="order-card">
+              <div>Mã đơn: <strong>#ORD-202611</strong></div>
+              <div style="margin-top:4px;">Trạng thái: <strong style="color:#b45309;">EXPIRED (Released Stock)</strong></div>
+            </div>
+            <div class="ba-note">
+              <strong>BA Rule (US-08 — Late IPN 14:59):</strong> Nếu khách quét lúc 14:59 nhưng IPN về trễ lúc 15:02 sau khi đơn đã <code>EXPIRED</code>, hệ thống gắn cờ <code>DISCREPANCY_FLAG</code> để hoàn tiền tự động.
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-brand" onclick="goStep(0)">Tạo lại đơn hàng mới</button>
+            <button class="btn btn-ghost" onclick="goStep(0)">Về giỏ hàng</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 06 (FAILED / CANCELLED) -->
+      <div class="phone-wrap">
+        <div class="phone">
+          <div>
+            <div class="notch"></div>
+            <div class="screen-tag"><span>Screen 06 • Thất bại</span><span class="us-pill">US-09</span></div>
+            <div class="app-header">Kết quả thanh toán</div>
+            <div class="status-circle st-err">✕</div>
+            <h3 class="center" style="margin:8px 0 4px; color:#b91c1c;">Giao dịch không thành công</h3>
+            <p class="center muted">Bạn đã hủy giao dịch hoặc số dư ví <span class="w-name">MoMo</span> không đủ.</p>
+            <div class="order-card">
+              <div>Mã phản hồi: <strong>4012 (USER_CANCELLED)</strong></div>
+              <div style="margin-top:4px;">Trạng thái: <strong style="color:#b91c1c;">FAILED</strong></div>
+            </div>
+            <div class="ba-note">
+              <strong>BA Rule (US-09):</strong> Mở khóa tồn kho ngay tức thì và điều hướng khách chọn phương thức ví thay thế để giữ tỷ lệ chuyển đổi.
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-brand" onclick="goStep(0)">Đổi phương thức thanh toán khác</button>
+            <button class="btn btn-ghost" onclick="goStep(0)">Quay lại cửa hàng</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function setMode(mode) {
+      const grid = document.getElementById('screensContainer');
+      const nav = document.getElementById('simNav');
+      document.getElementById('modeGridBtn').classList.toggle('active', mode === 'grid');
+      document.getElementById('modeSimBtn').classList.toggle('active', mode === 'sim');
+      grid.classList.toggle('single-mode', mode === 'sim');
+      nav.classList.toggle('visible', mode === 'sim');
+    }
+
+    function goStep(idx) {
+      const wraps = document.querySelectorAll('.phone-wrap');
+      const chips = document.querySelectorAll('.step-chip');
+      wraps.forEach((w, i) => w.classList.toggle('active-step', i === idx));
+      chips.forEach((c, i) => c.classList.toggle('current', i === idx));
+    }
+
+    function setWallet(w) {
+      const isZalo = w === 'zalo';
+      document.body.classList.toggle('zalo', isZalo);
+      document.getElementById('walletMomoBtn').className = 'seg-btn' + (!isZalo ? ' momo-active' : '');
+      document.getElementById('walletZaloBtn').className = 'seg-btn' + (isZalo ? ' zalo-active' : '');
+      document.querySelectorAll('.w-name').forEach(el => el.textContent = isZalo ? 'ZaloPay' : 'MoMo');
+      const rm = document.getElementById('r-momo');
+      const rz = document.getElementById('r-zalo');
+      rm.classList.toggle('selected', !isZalo);
+      rz.classList.toggle('selected', isZalo);
+      rm.lastElementChild.textContent = !isZalo ? '●' : '○';
+      rz.lastElementChild.textContent = isZalo ? '●' : '○';
+    }
+
+    function toggleBA() {
+      const hidden = document.body.classList.toggle('hide-ba');
+      const btn = document.getElementById('baToggleBtn');
+      btn.classList.toggle('off', hidden);
+      btn.textContent = hidden ? '🔍 Ghi chú BA: TẮT' : '🔍 Ghi chú BA: BẬT';
+    }
+
+    let sec = 14 * 60 + 58;
+    setInterval(() => {
+      if (sec > 0) sec--;
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      document.getElementById('liveTimer').textContent = m + ':' + s;
+    }, 1000);
+  </script>
 </body>
 </html>
